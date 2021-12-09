@@ -13,17 +13,15 @@ API_NAME = 'youtube'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
 
-service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
-
 parser = arg_parser("simple_parser")
 parser.add_argument(
         "--file", 
-        help="Name of the file to be uploaded including path", 
+        help="Path of the file to be uploaded", 
         action='store',
         type=str)
 parser.add_argument(
         "--thumbnail", 
-        help="Name of the file to be uploaded including path", 
+        help="Path of the thumbnail to be attached to the video",
         action='store',
         type=str)
 args = parser.parse_args()
@@ -47,6 +45,8 @@ request_body = {
         }
 
 media_file = MediaFileUpload(file_name)
+
+service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
 response_upload = service.videos().insert(
         part='snippet,status',
