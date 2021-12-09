@@ -12,14 +12,17 @@ CLIENT_SECRET_FILE = '/home/jose/Documents/GithubProjects/VideoUploaderMachine/c
 API_NAME = 'youtube'
 API_VERSION = 'v3'
 SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
-THUMBNAIL_PATH = '/home/jose/Pictures/thumbnail.jpg'
 
 service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
 parser = arg_parser("simple_parser")
-# TODO: Add argument for thumbnail with THUMBNAIL_PATH as default 
 parser.add_argument(
         "--file", 
+        help="Name of the file to be uploaded including path", 
+        action='store',
+        type=str)
+parser.add_argument(
+        "--thumbnail", 
         help="Name of the file to be uploaded including path", 
         action='store',
         type=str)
@@ -53,5 +56,5 @@ response_upload = service.videos().insert(
 
 service.thumbnails().set(
         videoId=response_upload.get('id'),
-        media_body=MediaFileUpload(THUMBNAIL_PATH)
+        media_body=MediaFileUpload(args.thumbnail)
         ).execute()
