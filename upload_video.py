@@ -44,7 +44,7 @@ request_body = {
         'notifySubscribers': False
         }
 
-media_file = MediaFileUpload(file_name)
+media_file = MediaFileUpload(file_name, chunksize=-1, resumable=True)
 
 service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
